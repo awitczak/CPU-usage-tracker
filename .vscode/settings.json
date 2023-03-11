@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "numeric": "c",
-        "*.tcc": "c"
+        "*.tcc": "c",
+        "stdio.h": "c",
+        "cstdio": "c"
     }
 }

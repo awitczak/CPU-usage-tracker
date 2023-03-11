@@ -1,6 +1,8 @@
-CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: \
- /home/awitczak/Desktop/CPU_Usage_Tracker/src/main.c \
- /usr/include/stdc-predef.h /usr/include/stdio.h \
+CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o: \
+ /home/awitczak/Desktop/CPU_Usage_Tracker/src/analyzer.c \
+ /usr/include/stdc-predef.h \
+ /home/awitczak/Desktop/CPU_Usage_Tracker/inc/analyzer.h \
+ /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -22,9 +24,8 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
- /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
- /home/awitczak/Desktop/CPU_Usage_Tracker/inc/fileread.h \
- /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+ /usr/include/x86_64-linux-gnu/bits/floatn-common.h /usr/include/stdlib.h \
+ /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
  /usr/include/x86_64-linux-gnu/sys/types.h \
  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
@@ -51,9 +52,6 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h /usr/include/string.h \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h \
- /home/awitczak/Desktop/CPU_Usage_Tracker/inc/analyzer.h \
- /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h /usr/include/stdint.h \
- /usr/include/x86_64-linux-gnu/bits/wchar.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /home/awitczak/Desktop/CPU_Usage_Tracker/inc/analyzer.h
+ /usr/include/strings.h /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h \
+ /usr/include/stdint.h /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h

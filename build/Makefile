@@ -523,6 +523,54 @@ CPU_Usage_Tracker/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/build
 .PHONY : CPU_Usage_Tracker/fast
 
+src/analyzer.o: src/analyzer.c.o
+.PHONY : src/analyzer.o
+
+# target to build an object file
+src/analyzer.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o
+.PHONY : src/analyzer.c.o
+
+src/analyzer.i: src/analyzer.c.i
+.PHONY : src/analyzer.i
+
+# target to preprocess a source file
+src/analyzer.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.i
+.PHONY : src/analyzer.c.i
+
+src/analyzer.s: src/analyzer.c.s
+.PHONY : src/analyzer.s
+
+# target to generate assembly for a file
+src/analyzer.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.s
+.PHONY : src/analyzer.c.s
+
+src/fileread.o: src/fileread.c.o
+.PHONY : src/fileread.o
+
+# target to build an object file
+src/fileread.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o
+.PHONY : src/fileread.c.o
+
+src/fileread.i: src/fileread.c.i
+.PHONY : src/fileread.i
+
+# target to preprocess a source file
+src/fileread.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.i
+.PHONY : src/fileread.c.i
+
+src/fileread.s: src/fileread.c.s
+.PHONY : src/fileread.s
+
+# target to generate assembly for a file
+src/fileread.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.s
+.PHONY : src/fileread.c.s
+
 src/main.o: src/main.c.o
 .PHONY : src/main.o
 
@@ -546,30 +594,6 @@ src/main.s: src/main.c.s
 src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.s
 .PHONY : src/main.c.s
-
-src/test.o: src/test.c.o
-.PHONY : src/test.o
-
-# target to build an object file
-src/test.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o
-.PHONY : src/test.c.o
-
-src/test.i: src/test.c.i
-.PHONY : src/test.i
-
-# target to preprocess a source file
-src/test.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.i
-.PHONY : src/test.c.i
-
-src/test.s: src/test.c.s
-.PHONY : src/test.s
-
-# target to generate assembly for a file
-src/test.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.s
-.PHONY : src/test.c.s
 
 # Help Target
 help:
@@ -611,12 +635,15 @@ help:
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
 	@echo "... CPU_Usage_Tracker"
+	@echo "... src/analyzer.o"
+	@echo "... src/analyzer.i"
+	@echo "... src/analyzer.s"
+	@echo "... src/fileread.o"
+	@echo "... src/fileread.i"
+	@echo "... src/fileread.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/test.o"
-	@echo "... src/test.i"
-	@echo "... src/test.s"
 .PHONY : help
 
 

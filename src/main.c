@@ -1,10 +1,18 @@
 #include "stdio.h"
-#include "test.h"
+
+// custom includes
+#include "fileread.h"
+#include "analyzer.h"
+
+CPU_data CPU, CPU_prev;
 
 int main() {
-    printf("%s", "Hello world!\n");
 
-    printf("The sum of 3 and 4 is equal to: %d", max(3, 4));
+    get_data("/proc/stat", &CPU);
+
+    init_demo_CPU_data(&CPU, &CPU_prev);
+
+    printf("CPU usage: %f", calculate_CPU_usage_percentage(&CPU, &CPU_prev));
 
     return 0;
 }

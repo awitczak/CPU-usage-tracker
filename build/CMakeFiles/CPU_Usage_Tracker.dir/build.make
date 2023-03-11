@@ -83,33 +83,49 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.s"
 	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/awitczak/Desktop/CPU_Usage_Tracker/src/main.c -o CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.s
 
-CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o: CMakeFiles/CPU_Usage_Tracker.dir/flags.make
-CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o: /home/awitczak/Desktop/CPU_Usage_Tracker/src/test.c
-CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o: CMakeFiles/CPU_Usage_Tracker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/awitczak/Desktop/CPU_Usage_Tracker/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o -MF CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o.d -o CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o -c /home/awitczak/Desktop/CPU_Usage_Tracker/src/test.c
+CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o: CMakeFiles/CPU_Usage_Tracker.dir/flags.make
+CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o: /home/awitczak/Desktop/CPU_Usage_Tracker/src/fileread.c
+CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o: CMakeFiles/CPU_Usage_Tracker.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/awitczak/Desktop/CPU_Usage_Tracker/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o -MF CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o.d -o CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o -c /home/awitczak/Desktop/CPU_Usage_Tracker/src/fileread.c
 
-CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/awitczak/Desktop/CPU_Usage_Tracker/src/test.c > CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.i
+CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.i"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/awitczak/Desktop/CPU_Usage_Tracker/src/fileread.c > CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.i
 
-CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/awitczak/Desktop/CPU_Usage_Tracker/src/test.c -o CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.s
+CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.s"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/awitczak/Desktop/CPU_Usage_Tracker/src/fileread.c -o CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.s
+
+CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o: CMakeFiles/CPU_Usage_Tracker.dir/flags.make
+CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o: /home/awitczak/Desktop/CPU_Usage_Tracker/src/analyzer.c
+CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o: CMakeFiles/CPU_Usage_Tracker.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/awitczak/Desktop/CPU_Usage_Tracker/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o -MF CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o.d -o CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o -c /home/awitczak/Desktop/CPU_Usage_Tracker/src/analyzer.c
+
+CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.i"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/awitczak/Desktop/CPU_Usage_Tracker/src/analyzer.c > CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.i
+
+CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.s"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/awitczak/Desktop/CPU_Usage_Tracker/src/analyzer.c -o CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.s
 
 # Object files for target CPU_Usage_Tracker
 CPU_Usage_Tracker_OBJECTS = \
 "CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o" \
-"CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o"
+"CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o" \
+"CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o"
 
 # External object files for target CPU_Usage_Tracker
 CPU_Usage_Tracker_EXTERNAL_OBJECTS =
 
 CPU_Usage_Tracker: CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o
-CPU_Usage_Tracker: CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o
+CPU_Usage_Tracker: CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o
+CPU_Usage_Tracker: CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o
 CPU_Usage_Tracker: CMakeFiles/CPU_Usage_Tracker.dir/build.make
 CPU_Usage_Tracker: CMakeFiles/CPU_Usage_Tracker.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/awitczak/Desktop/CPU_Usage_Tracker/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable CPU_Usage_Tracker"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/awitczak/Desktop/CPU_Usage_Tracker/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable CPU_Usage_Tracker"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CPU_Usage_Tracker.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

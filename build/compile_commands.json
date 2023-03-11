@@ -6,7 +6,12 @@
 },
 {
   "directory": "/home/awitczak/Desktop/CPU_Usage_Tracker/build",
-  "command": "/usr/bin/gcc  -I/home/awitczak/Desktop/CPU_Usage_Tracker/src -I/home/awitczak/Desktop/CPU_Usage_Tracker/inc -g -std=gnu99 -o CMakeFiles/CPU_Usage_Tracker.dir/src/test.c.o -c /home/awitczak/Desktop/CPU_Usage_Tracker/src/test.c",
-  "file": "/home/awitczak/Desktop/CPU_Usage_Tracker/src/test.c"
+  "command": "/usr/bin/gcc  -I/home/awitczak/Desktop/CPU_Usage_Tracker/src -I/home/awitczak/Desktop/CPU_Usage_Tracker/inc -g -std=gnu99 -o CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o -c /home/awitczak/Desktop/CPU_Usage_Tracker/src/fileread.c",
+  "file": "/home/awitczak/Desktop/CPU_Usage_Tracker/src/fileread.c"
+},
+{
+  "directory": "/home/awitczak/Desktop/CPU_Usage_Tracker/build",
+  "command": "/usr/bin/gcc  -I/home/awitczak/Desktop/CPU_Usage_Tracker/src -I/home/awitczak/Desktop/CPU_Usage_Tracker/inc -g -std=gnu99 -o CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o -c /home/awitczak/Desktop/CPU_Usage_Tracker/src/analyzer.c",
+  "file": "/home/awitczak/Desktop/CPU_Usage_Tracker/src/analyzer.c"
 }
 ]

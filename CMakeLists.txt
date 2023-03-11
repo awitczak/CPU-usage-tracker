@@ -6,7 +6,8 @@ enable_testing()
 
 add_executable(CPU_Usage_Tracker 
     src/main.c
-    src/test.c
+    src/fileread.c
+    src/analyzer.c
 )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
