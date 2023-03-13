@@ -3,6 +3,7 @@
         "numeric": "c",
         "*.tcc": "c",
         "stdio.h": "c",
-        "cstdio": "c"
+        "cstdio": "c",
+        "pthread.h": "c"
     }
 }

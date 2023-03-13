@@ -156,7 +156,6 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: /home/awitczak/Desktop/CPU_Usage_
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
-  /home/awitczak/Desktop/CPU_Usage_Tracker/inc/fileread.h \
   /usr/include/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
@@ -185,9 +184,31 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: /home/awitczak/Desktop/CPU_Usage_
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/string.h \
+  /usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
+  /usr/include/x86_64-linux-gnu/bits/sched.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+  /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
+  /usr/include/time.h \
+  /usr/include/x86_64-linux-gnu/bits/time.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h \
+  /usr/include/unistd.h \
+  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
+  /usr/include/x86_64-linux-gnu/bits/environments.h \
+  /usr/include/x86_64-linux-gnu/bits/confname.h \
+  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
+  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
+  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
+  /home/awitczak/Desktop/CPU_Usage_Tracker/inc/fileread.h \
+  /usr/include/string.h \
   /usr/include/strings.h \
   /home/awitczak/Desktop/CPU_Usage_Tracker/inc/analyzer.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h \
@@ -196,6 +217,34 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: /home/awitczak/Desktop/CPU_Usage_
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /home/awitczak/Desktop/CPU_Usage_Tracker/inc/analyzer.h
 
+
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
+
+/usr/include/x86_64-linux-gnu/bits/confname.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
+
+/usr/include/unistd.h:
+
+/usr/include/x86_64-linux-gnu/bits/setjmp.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
+
+/usr/include/x86_64-linux-gnu/bits/time.h:
+
+/usr/include/time.h:
+
+/usr/include/x86_64-linux-gnu/bits/cpu-set.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
+
+/usr/include/x86_64-linux-gnu/bits/sched.h:
+
+/usr/include/sched.h:
+
+/usr/include/pthread.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h:
 
 /home/awitczak/Desktop/CPU_Usage_Tracker/src/fileread.c:
 
@@ -216,6 +265,8 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: /home/awitczak/Desktop/CPU_Usage_
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 
 /home/awitczak/Desktop/CPU_Usage_Tracker/inc/fileread.h:
 
@@ -249,6 +300,8 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: /home/awitczak/Desktop/CPU_Usage_
 
 /usr/include/strings.h:
 
+/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
 /usr/include/stdio.h:
@@ -262,6 +315,8 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: /home/awitczak/Desktop/CPU_Usage_
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
 
@@ -277,7 +332,11 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: /home/awitczak/Desktop/CPU_Usage_
 
 /home/awitczak/Desktop/CPU_Usage_Tracker/src/analyzer.c:
 
+/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
+
 /usr/include/features-time64.h:
+
+/usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
 
@@ -301,6 +360,8 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: /home/awitczak/Desktop/CPU_Usage_
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
+/usr/include/x86_64-linux-gnu/bits/environments.h:
+
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
@@ -310,6 +371,8 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: /home/awitczak/Desktop/CPU_Usage_
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
