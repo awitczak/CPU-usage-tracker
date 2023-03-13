@@ -74,4 +74,4 @@ CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o: \
  /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /home/awitczak/Desktop/CPU_Usage_Tracker/inc/analyzer.h
+ /home/awitczak/Desktop/CPU_Usage_Tracker/inc/queue.h

@@ -837,12 +837,12 @@ CMakeFiles/ContinuousSubmit.dir/clean:
 CMakeFiles/CPU_Usage_Tracker.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/awitczak/Desktop/CPU_Usage_Tracker/build/CMakeFiles --progress-num=1,2,3,4 "Built target CPU_Usage_Tracker"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/awitczak/Desktop/CPU_Usage_Tracker/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target CPU_Usage_Tracker"
 .PHONY : CMakeFiles/CPU_Usage_Tracker.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/CPU_Usage_Tracker.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/awitczak/Desktop/CPU_Usage_Tracker/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/awitczak/Desktop/CPU_Usage_Tracker/build/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/CPU_Usage_Tracker.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/awitczak/Desktop/CPU_Usage_Tracker/build/CMakeFiles 0
 .PHONY : CMakeFiles/CPU_Usage_Tracker.dir/rule

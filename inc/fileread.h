@@ -13,10 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "analyzer.h"
-
-int get_data(char* filepath, CPU_data *CPU);
-int get_CPU_data(char* filepath, CPU_data *CPU);
+char **get_data(char* filepath);
 
 #endif /* FILEREAD_H */
 

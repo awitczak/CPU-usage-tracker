@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o.d"
   "CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o"
   "CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o.d"
+  "CMakeFiles/CPU_Usage_Tracker.dir/src/queue.c.o"
+  "CMakeFiles/CPU_Usage_Tracker.dir/src/queue.c.o.d"
   "CPU_Usage_Tracker"
   "CPU_Usage_Tracker.pdb"
 )

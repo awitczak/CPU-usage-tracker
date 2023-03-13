@@ -11,13 +11,14 @@
 #define CHUNK_SIZE  64
 #define N_LINES     16
 
-int get_data(char* filepath, CPU_data *CPU) {
+char **get_data(char* filepath) {
     
     FILE* pFile = fopen(filepath, "r");
     
     if (pFile == NULL) {
         printf("Can't open the given file!\n");
-        return -1;
+        // return -1;
+        exit(1);
     }
     else printf("File opened successfully!\n");
 
@@ -34,7 +35,8 @@ int get_data(char* filepath, CPU_data *CPU) {
         if (ferror(pFile))
         {
             printf("Error reading from file.\n");
-            return -2;
+            // return -2;
+            exit(1);
         }
 
         if (char_cnt == 0) lines[line_cnt] = malloc(CHUNK_SIZE);
@@ -73,20 +75,17 @@ int get_data(char* filepath, CPU_data *CPU) {
         }
     }
 
-    // resizing the line count
+    /* resizing the line count */
     lines = realloc(lines, sizeof(char *) * line_cnt);
 
-    for (size_t i = 0; i < line_cnt; i++) {
-        printf("%s\n", lines[i]);
-    }
+    /* freeing will be done after the analyzer thread finishes processing the data from the queue */
+    // for (size_t i = 0; i < line_cnt; i++) {
+    //     free(lines[i]);
+    // } 
+    // free(lines);
 
-    // cleaning up
-    for (size_t i = 0; i < line_cnt; i++) {
-        free(lines[i]);
-    }
-
-    free(lines);
+    /* close the file */
     fclose(pFile);
 
-    return 0;
+    return lines;
 }

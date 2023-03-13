@@ -1,1 +1,1 @@
-/usr/bin/gcc -g -rdynamic CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o -o CPU_Usage_Tracker 
+/usr/bin/gcc -g -rdynamic CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.o CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.o CMakeFiles/CPU_Usage_Tracker.dir/src/analyzer.c.o CMakeFiles/CPU_Usage_Tracker.dir/src/queue.c.o -o CPU_Usage_Tracker 

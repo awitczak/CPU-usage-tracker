@@ -8,15 +8,23 @@
 // custom includes
 #include "fileread.h"
 #include "analyzer.h"
+#include "queue.h"
 
 #define NUM_THREADS 4
 
 /* Time provided in milliseconds for each thread to operate */
 #define WATCHDOG_TIMEOUT 2000
-#define READER_T 500
+#define READER_T 1000
 #define ANALYZER_T 500
 #define PRINTER_T 500
 #define LOGGER_T 500
+
+typedef struct {
+    pthread_t reader_id;
+    pthread_t analyzer_id;
+    pthread_t printer_id;
+    pthread_t logger_id;
+} thread_IDs;
 
 /* mutexes used for the thread responses */
 pthread_mutex_t reader_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -37,13 +45,7 @@ bool printer_responded = false;
 bool logger_responded = false;
 
 CPU_data CPU, CPU_prev;
-
-typedef struct {
-    pthread_t reader_id;
-    pthread_t analyzer_id;
-    pthread_t printer_id;
-    pthread_t logger_id;
-} thread_IDs;
+queue_t test_queue;
 
 /* function declarations */
 void *reader(void *arg);
@@ -66,6 +68,14 @@ void *reader(void *arg) {
         pthread_mutex_lock(&reader_mutex);
         reader_responded = true;
         pthread_mutex_unlock(&reader_mutex);
+
+        char **data = get_data("/proc/stat");
+
+        printf("%s\n", data[0]);
+
+        free(data);
+
+        // queue_push(&test_queue, )
     }
 
     printf("Reader thread completed.\n");
@@ -191,13 +201,9 @@ void wait_ms(unsigned int ms) {
 
 int main(int argc, char *argv[]) {
 
-    // get_data("/proc/stat", &CPU);
-
-    // init_demo_CPU_data(&CPU, &CPU_prev);
-
-    // printf("CPU usage: %f", calculate_CPU_usage_percentage(&CPU, &CPU_prev));
-
-
+    /* Initialize the queue */
+    queue_init(&test_queue, QUEUE_SIZE);
+    
     thread_IDs IDs;
     pthread_t reader_id, analyzer_id, printer_id, logger_id, watchdog_id;
 
@@ -218,7 +224,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (pthread_create(&logger_id, NULL, logger, NULL) != 0) {
-        fprintf (stderr, "Unable to create printer thread\n");
+        fprintf (stderr, "Unable to create logger thread\n");
         exit(1);
     }
 
@@ -231,7 +237,7 @@ int main(int argc, char *argv[]) {
     // printf("Before watchdog -> %ld %ld %ld %ld\n", data.reader_id, data.analyzer_id, data.printer_id, data.logger_id);
 
     if (pthread_create(&watchdog_id, NULL, watchdog, (void*) &IDs) != 0) {
-        fprintf (stderr, "Unable to create printer thread\n");
+        fprintf (stderr, "Unable to create watchdog thread\n");
         exit(1);
     }
 

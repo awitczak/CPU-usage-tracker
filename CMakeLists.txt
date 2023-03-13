@@ -8,6 +8,7 @@ add_executable(CPU_Usage_Tracker
     src/main.c
     src/fileread.c
     src/analyzer.c
+    src/queue.c
 )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
