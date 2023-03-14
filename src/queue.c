@@ -1,54 +1,56 @@
 #include "queue.h"
 
-void queue_init(queue_t *queue, size_t queue_size) {
-    queue->head = 0;
-    queue->tail = 0;
-    queue->size = queue_size;
-    queue->count = 0;
+void queue_init(queue_t *queue) {
+    queue_node_t *tmp = malloc(sizeof(queue_node_t));
+    tmp->next = NULL;
+    queue->head = tmp;
+    queue->tail = tmp;
 
-    pthread_mutex_init(&queue->lock, NULL);
-    pthread_cond_init(&queue->not_empty, NULL);
-    pthread_cond_init(&queue->not_full, NULL);
+    pthread_mutex_init(&queue->head_lock, NULL);
+    pthread_mutex_init(&queue->tail_lock, NULL);
 }
 
-void queue_push(queue_t *queue, void *item) {
-    /* acquire mutex */
-    pthread_mutex_lock(&queue->lock);
+void queue_destroy(queue_t *queue) {
+    queue_node_t *tmp = queue->head;
 
-    /* wait for the queue to not be full before trying to add an item */
-    while (queue->count == queue->size) {
-        pthread_cond_wait(&queue->not_full, &queue->lock);
+    while (tmp != NULL) {
+        queue_node_t *next = tmp->next;
+        free(tmp);
+        tmp = next;
     }
 
-    queue->data[queue->tail] = item;
-    queue->tail = (queue->tail + 1) % queue->size;
-    queue->count++;
+    pthread_mutex_destroy(&queue->head_lock);
+    pthread_mutex_destroy(&queue->tail_lock);
+}
 
-    /* signal not_empty, as an item was added to the queue */
-    pthread_cond_signal(&queue->not_empty);
+void queue_push_back(queue_t *queue, void *data) {
+    queue_node_t *tmp = malloc(sizeof(queue_node_t));
 
-    /* release mutex */
-    pthread_mutex_unlock(&queue->lock);
-}   
+    tmp->data = data;
+    tmp->next = NULL;
 
-void *queue_pop(queue_t *queue) {
-    /* acquire mutex */
-    pthread_mutex_lock(&queue->lock);
+    pthread_mutex_lock(&queue->tail_lock);
+    queue->tail->next = tmp;
+    queue->tail = tmp;
+    pthread_mutex_unlock(&queue->tail_lock);
+}
 
-    /* wait for the queue to not be empty before trying to remove an item */
-    while (queue->count == 0) {
-        pthread_cond_wait(&queue->not_empty, &queue->lock);
+void *queue_pop_back(queue_t *queue) {
+    pthread_mutex_lock(&queue->head_lock);
+    queue_node_t *tmp = queue->head;
+    queue_node_t *new_head = tmp->next;
+    
+    /* if queue is empty */
+    if (new_head == NULL) {
+        pthread_mutex_unlock(&queue->head_lock);
+        return NULL;
     }
 
-    void *item = queue->data[queue->head];
-    queue->head = (queue->head + 1) % queue->size;
-    queue->count--;
+    queue->head = new_head;
+    pthread_mutex_unlock(&queue->head_lock);
 
-    /* signal not_full, as an item was removed from the queue */
-    pthread_cond_signal(&queue->not_full);
+    void *data = tmp->data;
+    free(tmp);
 
-    /* release mutex */
-    pthread_mutex_unlock(&queue->lock);
-
-    return item;
+    return data;
 }

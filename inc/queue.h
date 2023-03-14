@@ -9,26 +9,25 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 
-#define QUEUE_SIZE 64
+typedef struct queue_node {
+    void *data;
+    struct queue_node *next;
+} queue_node_t;
 
-typedef struct queue {
-    void **data;
-    size_t head;
-    size_t tail;
-    size_t size;
-    size_t count;
-    pthread_mutex_t lock;
-    pthread_cond_t not_empty;
-    pthread_cond_t not_full;
+typedef struct {
+    queue_node_t *head;
+    queue_node_t *tail;
+    pthread_mutex_t head_lock;
+    pthread_mutex_t tail_lock;
 } queue_t;
 
-void queue_init(queue_t *queue, size_t queue_size);
-void queue_push(queue_t *queue, void *item);
-void *queue_pop(queue_t *queue);
+void queue_init(queue_t *queue);
+void queue_destroy(queue_t *queue);
+void queue_push_back(queue_t *queue, void *data);
+void *queue_pop_back(queue_t *queue);
 
 #endif /* QUEUE_H */
 

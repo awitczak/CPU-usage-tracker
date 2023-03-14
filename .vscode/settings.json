@@ -4,6 +4,8 @@
         "*.tcc": "c",
         "stdio.h": "c",
         "cstdio": "c",
-        "pthread.h": "c"
+        "pthread.h": "c",
+        "atomic": "cpp",
+        "logger.h": "c"
     }
 }

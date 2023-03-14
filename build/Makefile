@@ -571,6 +571,30 @@ src/fileread.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/fileread.c.s
 .PHONY : src/fileread.c.s
 
+src/logger.o: src/logger.c.o
+.PHONY : src/logger.o
+
+# target to build an object file
+src/logger.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/logger.c.o
+.PHONY : src/logger.c.o
+
+src/logger.i: src/logger.c.i
+.PHONY : src/logger.i
+
+# target to preprocess a source file
+src/logger.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/logger.c.i
+.PHONY : src/logger.c.i
+
+src/logger.s: src/logger.c.s
+.PHONY : src/logger.s
+
+# target to generate assembly for a file
+src/logger.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/logger.c.s
+.PHONY : src/logger.c.s
+
 src/main.o: src/main.c.o
 .PHONY : src/main.o
 
@@ -594,6 +618,30 @@ src/main.s: src/main.c.s
 src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/main.c.s
 .PHONY : src/main.c.s
+
+src/mpsc_queue.o: src/mpsc_queue.c.o
+.PHONY : src/mpsc_queue.o
+
+# target to build an object file
+src/mpsc_queue.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/mpsc_queue.c.o
+.PHONY : src/mpsc_queue.c.o
+
+src/mpsc_queue.i: src/mpsc_queue.c.i
+.PHONY : src/mpsc_queue.i
+
+# target to preprocess a source file
+src/mpsc_queue.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/mpsc_queue.c.i
+.PHONY : src/mpsc_queue.c.i
+
+src/mpsc_queue.s: src/mpsc_queue.c.s
+.PHONY : src/mpsc_queue.s
+
+# target to generate assembly for a file
+src/mpsc_queue.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CPU_Usage_Tracker.dir/build.make CMakeFiles/CPU_Usage_Tracker.dir/src/mpsc_queue.c.s
+.PHONY : src/mpsc_queue.c.s
 
 src/queue.o: src/queue.c.o
 .PHONY : src/queue.o
@@ -665,9 +713,15 @@ help:
 	@echo "... src/fileread.o"
 	@echo "... src/fileread.i"
 	@echo "... src/fileread.s"
+	@echo "... src/logger.o"
+	@echo "... src/logger.i"
+	@echo "... src/logger.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/mpsc_queue.o"
+	@echo "... src/mpsc_queue.i"
+	@echo "... src/mpsc_queue.s"
 	@echo "... src/queue.o"
 	@echo "... src/queue.i"
 	@echo "... src/queue.s"

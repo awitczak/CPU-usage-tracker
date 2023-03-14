@@ -9,6 +9,8 @@ add_executable(CPU_Usage_Tracker
     src/fileread.c
     src/analyzer.c
     src/queue.c
+    src/mpsc_queue.c
+    src/logger.c
 )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
