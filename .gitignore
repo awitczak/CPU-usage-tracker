@@ -1,2 +1,2 @@
-build/*
+CPU_Usage_Tracker/build/
 *.log
