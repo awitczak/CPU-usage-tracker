@@ -31,13 +31,6 @@ bool log_to_file(mpsc_queue_t *queue, const char *filepath) {
 
     /* check if queue is not empty */
     if (get_mpsc_queue_size(queue)) {
-    
-        FILE* pFile = fopen(filepath, "a");
-
-        if (pFile == NULL) {
-            printf("Error opening log file");
-            return false;
-        }
 
         /* create a timestamp for the log */
         time_t now = time(NULL);
@@ -47,9 +40,25 @@ bool log_to_file(mpsc_queue_t *queue, const char *filepath) {
         /* get data from queue */
         char *data = (char *) mpsc_queue_pop(queue);
 
-        fprintf(pFile, "[%s] %s\n", timestamp, data);
-        fclose(pFile);
+        /* prepare the logging msg */
+        char buffer[LOG_BUFFER_SIZE];
+        sprintf(buffer, "[%s] -> %s", timestamp, data);
+
+        /* write to the log file */
+        write_to_file(filepath, buffer);
     }
 
     return true;
+}
+
+void write_to_file(const char *filepath, const char *msg) {
+    FILE* pFile = fopen(filepath, "a");
+
+    if (pFile == NULL) {
+        perror("Error opening log file");
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(pFile, "%s\n", msg);
+    fclose(pFile);
 }

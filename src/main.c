@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <time.h>
 #include <unistd.h>
+#include <signal.h>
 
 // custom includes
 #include "fileread.h"
@@ -13,6 +14,8 @@
 #include "mpsc_queue.h"
 
 #define NUM_THREADS 4
+
+#define LOG_FILEPATH "../CPU_Usage_Tracker.log"
 
 /* Time provided in milliseconds for each thread to operate */
 #define WATCHDOG_TIMEOUT 2000
@@ -38,17 +41,13 @@ pthread_mutex_t analyzer_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t printer_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t logger_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-/* flags for each thread */
-bool reader_is_running = false;
-bool analyzer_is_running = false;
-bool printer_is_running = false;
-bool logger_is_running = false;
-bool watchdog_is_running = false;
-
+/* flags for thread operation */
 bool reader_responded = false;
 bool analyzer_responded = false;
 bool printer_responded = false;
 bool logger_responded = false;
+
+volatile sig_atomic_t thread_running = true;
 
 CPU_data CPU, CPU_prev;
 
@@ -60,16 +59,15 @@ void *logger(void *arg);
 void *watchdog(void *arg);
 bool watchdog_check(pthread_mutex_t *mutex, bool *thread_responded, watchdog_data *wd);
 void wait_ms(unsigned int ms);
+void signal_handler(int signum);
 
 void *reader(void *arg) {
-    reader_is_running = true;
-
     // queue_t *queue = (queue_t *) arg;
     mpsc_queue_t *logging_queue = (mpsc_queue_t *) arg;
 
     log_thread_info(logging_queue, "Reader started");
 
-    while (reader_is_running ) {
+    while (thread_running) {
         wait_ms(READER_T);
 
         /* signal the watchdog */
@@ -90,14 +88,12 @@ void *reader(void *arg) {
 }
 
 void *analyzer(void *arg) {
-    analyzer_is_running = true;
- 
     // queue_t *queue = (queue_t *) arg;
     mpsc_queue_t *logging_queue = (mpsc_queue_t *) arg;
 
     log_thread_info(logging_queue, "Analyzer started");
 
-    while (analyzer_is_running) {
+    while (thread_running) {
         wait_ms(ANALYZER_T);
 
         /* signal the watchdog */
@@ -113,13 +109,11 @@ void *analyzer(void *arg) {
 }
 
 void *printer(void *arg) {
-    printer_is_running = true;
- 
     mpsc_queue_t *logging_queue = (mpsc_queue_t *) arg;
 
     log_thread_info(logging_queue, "Printer started");
 
-    while (printer_is_running) {
+    while (thread_running) {
         wait_ms(PRINTER_T);
 
         /* signal the watchdog */
@@ -135,13 +129,11 @@ void *printer(void *arg) {
 }
 
 void *logger(void *arg) {
-    logger_is_running = true;
-
     mpsc_queue_t *logging_queue = (mpsc_queue_t *) arg;
 
     log_thread_info(logging_queue, "Logger started");
 
-    while (logger_is_running) {
+    while (thread_running) {
         wait_ms(LOGGER_T);
 
         /* signal the watchdog */
@@ -149,7 +141,7 @@ void *logger(void *arg) {
         logger_responded = true;
         pthread_mutex_unlock(&logger_mutex);
 
-        log_to_file(logging_queue, "../test_log.log");
+        log_to_file(logging_queue, LOG_FILEPATH);
     }
 
     printf("Logger thread completed.\n");
@@ -157,13 +149,11 @@ void *logger(void *arg) {
 }
 
 void *watchdog(void *arg) {
-    watchdog_is_running = true;
-
     watchdog_data *wd = (watchdog_data *) arg;
 
     log_thread_info(wd->logging_queue, "Watchdog started");
 
-    while (watchdog_is_running) {
+    while (thread_running) {
 
         wait_ms(WATCHDOG_TIMEOUT);
 
@@ -196,6 +186,7 @@ bool watchdog_check(pthread_mutex_t *mutex, bool *thread_responded, watchdog_dat
     }
     else {
         log_msg(wd->logging_queue, "Watchdog triggered, canceling threads");
+        thread_running = false;
         pthread_cancel(wd->reader_id);
         pthread_cancel(wd->analyzer_id);
         pthread_cancel(wd->printer_id);
@@ -207,8 +198,6 @@ bool watchdog_check(pthread_mutex_t *mutex, bool *thread_responded, watchdog_dat
         else {
             log_error(wd->logging_queue, "Failed to destroy the logging queue");
         }
-
-        log_msg(wd->logging_queue, "Threads cancelled successfully");
 
         pthread_mutex_unlock(mutex);
 
@@ -224,7 +213,31 @@ void wait_ms(unsigned int ms) {
     nanosleep(&ts, NULL);
 }
 
+void signal_handler(int signum) {
+    if (signum == SIGINT) {
+        write_to_file(LOG_FILEPATH, "Keyboard interrupt detected");
+        thread_running = false;
+    }
+    if (signum == SIGTERM) {
+        write_to_file(LOG_FILEPATH, "SIGTERM detected");
+        thread_running = false;
+    }
+}
+
 int main(int argc, char *argv[]) {
+
+    char **data = (char **) get_CPU_data(PROC_STAT_PATH);
+    printf("%s\n", data[0]);
+    printf("%s\n", data[1]);
+    printf("%s\n", data[2]);
+
+    /* SIGTERM setup */
+    struct sigaction action;
+    action.sa_handler = signal_handler;
+    action.sa_flags = 0;
+    sigemptyset(&action.sa_mask);
+    sigaction(SIGINT, &action, NULL);
+    sigaction(SIGTERM, &action, NULL);
 
     /* Initialize the queue */
     queue_t queue;
@@ -275,12 +288,9 @@ int main(int argc, char *argv[]) {
     pthread_join(analyzer_id, NULL);
     pthread_join(printer_id, NULL);
     pthread_join(logger_id, NULL);
-
-    watchdog_is_running = false;
-    pthread_cancel(watchdog_id);
     pthread_join(watchdog_id, NULL);
     
-    // log_msg(&mpsc_queue, "Program finished\n");
+    write_to_file(LOG_FILEPATH, "Program finished");
 
     return 0;
 }

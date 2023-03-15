@@ -12,8 +12,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-char **get_data(char* filepath);
+#define PROC_STAT_PATH "/proc/stat"
+#define CHUNK_SIZE  64
+
+void **get_CPU_data(const char* filepath);
 
 #endif /* FILEREAD_H */
 
