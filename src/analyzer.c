@@ -1,48 +1,53 @@
 #include "analyzer.h"
 
-void init_demo_CPU_data(CPU_data_t*CPU, CPU_data_t*CPU_prev) {
-    CPU_prev->user = 596365;
-    CPU_prev->nice = 792;
-    CPU_prev->system = 121328;
-    CPU_prev->idle = 9103716;
-    CPU_prev->iowait = 3445;
-    CPU_prev->irq = 0;
-    CPU_prev->softirq = 11101;
-    CPU_prev->steal = 0;
-    CPU_prev->guest = 0;
-    CPU_prev->guest_nice = 0;
+void CPU_data_init(CPU_data_t *CPU, size_t size) {
+    CPU->size = size + 1;
+    CPU->CPU_data = malloc(sizeof(core_data_t) * CPU->size);
 
-    CPU->user = 619826;
-    CPU->nice = 793;
-    CPU->system = 125326;
-    CPU->idle = 9325694;
-    CPU->iowait = 3512;
-    CPU->irq = 0;
-    CPU->softirq = 11390;
-    CPU->steal = 0;
-    CPU->guest = 0;
-    CPU->guest_nice = 0;
+    for (size_t i = 0; i < CPU->size; i++) {
+        CPU[i].CPU_data = malloc(sizeof(core_data_t));
 
-    CPU_prev->non_idle = 0;
-    CPU->non_idle = 0;
+        CPU[i].CPU_data->user       = 0;
+        CPU[i].CPU_data->nice       = 0;
+        CPU[i].CPU_data->system     = 0;
+        CPU[i].CPU_data->idle       = 0;
+        CPU[i].CPU_data->iowait     = 0;
+        CPU[i].CPU_data->irq        = 0;
+        CPU[i].CPU_data->softirq    = 0;
+        CPU[i].CPU_data->steal      = 0;
+        CPU[i].CPU_data->guest      = 0;
+        CPU[i].CPU_data->guest_nice = 0;
 
-    CPU_prev->total = 0;
-    CPU->total = 0;
+        CPU[i].CPU_data->non_idle   = 0;
+        CPU[i].CPU_data->total      = 0;
+    }
 }
 
-float calculate_CPU_usage_percentage(CPU_data_t*CPU, CPU_data_t*CPU_prev) {
-
-    CPU_prev->idle = CPU_prev->idle + CPU_prev->iowait;
-    CPU->idle = CPU->idle + CPU->iowait;
-
-    CPU_prev->non_idle = CPU_prev->user + CPU_prev->nice + CPU_prev->system + CPU_prev->irq + CPU_prev->softirq + CPU_prev->steal;
-    CPU->non_idle = CPU->user + CPU->nice + CPU->system + CPU->irq + CPU->softirq + CPU->steal;
-
-    CPU_prev->total = CPU_prev->idle + CPU_prev->non_idle;
-    CPU->total = CPU->idle + CPU->non_idle;
-
-    double totald = CPU->total - CPU_prev->total;
-    double idled = CPU->idle - CPU_prev->idle;
-
-    return (totald - idled) / totald;
+void process_CPU_data(CPU_data_t *CPU, char **data) {
+    for (size_t i = 0; i < CPU->size; i++) {
+        sscanf(data[i], "%*s %u %u %u %u %u %u %u %u %u %u", &CPU[i].CPU_data->user, &CPU[i].CPU_data->nice, &CPU[i].CPU_data->system, &CPU[i].CPU_data->idle, &CPU[i].CPU_data->iowait, &CPU[i].CPU_data->irq, &CPU[i].CPU_data->softirq, &CPU[i].CPU_data->steal, &CPU[i].CPU_data->guest, &CPU[i].CPU_data->guest_nice);
+    }
 }
+
+void print_CPU_data(CPU_data_t *CPU) {
+    for (size_t i = 0; i < CPU->size; i++) {
+        printf("cpu[%ld]: %d %d %d %d %d %d %d %d %d %d\n", i, CPU[i].CPU_data->user, CPU[i].CPU_data->nice, CPU[i].CPU_data->system, CPU[i].CPU_data->idle, CPU[i].CPU_data->iowait, CPU[i].CPU_data->irq, CPU[i].CPU_data->softirq, CPU[i].CPU_data->steal, CPU[i].CPU_data->guest, CPU[i].CPU_data->guest_nice);
+    }
+}
+
+// float calculate_CPU_usage_percentage(CPU_data_t *CPU, CPU_data_t *CPU_prev) {
+
+    // CPU_prev->idle = CPU_prev->idle + CPU_prev->iowait;
+    // CPU->idle = CPU->idle + CPU->iowait;
+
+    // CPU_prev->non_idle = CPU_prev->user + CPU_prev->nice + CPU_prev->system + CPU_prev->irq + CPU_prev->softirq + CPU_prev->steal;
+    // CPU->non_idle = CPU->user + CPU->nice + CPU->system + CPU->irq + CPU->softirq + CPU->steal;
+
+    // CPU_prev->total = CPU_prev->idle + CPU_prev->non_idle;
+    // CPU->total = CPU->idle + CPU->non_idle;
+
+    // double totald = CPU->total - CPU_prev->total;
+    // double idled = CPU->idle - CPU_prev->idle;
+
+    // return (totald - idled) / totald;
+// }

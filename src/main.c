@@ -60,8 +60,6 @@ bool watchdog_triggered = false;
 
 volatile sig_atomic_t thread_running = true;
 
-CPU_data_t CPU, CPU_prev;
-
 /* function declarations */
 void *reader(void *arg);
 void *analyzer(void *arg);
@@ -102,6 +100,11 @@ void *reader(void *arg) {
 void *analyzer(void *arg) {
     thread_args_t *th = (thread_args_t *) arg;
 
+    CPU_data_t CPU_curr, CPU_prev;
+    CPU_data_init(&CPU_curr, NUM_CORES);
+
+    // CPU_data_init(&CPU_prev, NUM_CORES);
+
     log_thread_info(th->logging_queue, "Analyzer started");
 
     while (thread_running) {
@@ -116,8 +119,11 @@ void *analyzer(void *arg) {
 
         log_msg(th->logging_queue, "Analyzer received");
 
-        void **data2 = get_CPU_data(PROC_STAT_PATH);
-        rb_queue_push_back(th->AP_queue, data2);
+        process_CPU_data(&CPU_curr, data);
+        print_CPU_data(&CPU_curr);
+
+        // void **data2 = get_CPU_data(PROC_STAT_PATH);
+        // rb_queue_push_back(th->AP_queue, data2);
     }
 
     write_to_file(LOG_FILEPATH, "Analyzer completed");
@@ -137,9 +143,9 @@ void *printer(void *arg) {
         printer_responded = true;
         pthread_mutex_unlock(&printer_mutex);
 
-        char **data = (char **) rb_queue_pop(th->AP_queue);
+        // char **data = (char **) rb_queue_pop(th->AP_queue);
 
-        printf("printer -> %s\n", data[0]);
+        // printf("printer -> %s\n", data[0]);
     }
 
     write_to_file(LOG_FILEPATH, "Printer completed");

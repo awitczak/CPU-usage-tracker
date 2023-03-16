@@ -29,11 +29,17 @@ typedef struct {
     uint32_t non_idle;
     uint32_t total;
 
+} core_data_t;
+
+typedef struct {
+    size_t size;
+    core_data_t *CPU_data;
 } CPU_data_t;
 
-void init_demo_CPU_data(CPU_data_t*CPU, CPU_data_t*CPU_prev);
-
-float calculate_CPU_usage_percentage(CPU_data_t*CPU, CPU_data_t*CPU_prev);
+void CPU_data_init(CPU_data_t *CPU, size_t size);
+void process_CPU_data(CPU_data_t *CPU, char **data);
+void print_CPU_data(CPU_data_t *CPU);
+// float calculate_CPU_usage_percentage(CPU_data_t *CPU, CPU_data_t *CPU_prev);
 
 #endif /* ANALYZER_H */
 
