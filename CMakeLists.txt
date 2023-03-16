@@ -8,7 +8,7 @@ add_executable(CPU_Usage_Tracker
     src/main.c
     src/fileread.c
     src/analyzer.c
-    src/queue.c
+    src/rb_queue.c
     src/mpsc_queue.c
     src/logger.c
 )

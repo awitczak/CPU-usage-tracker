@@ -1,6 +1,6 @@
 #include "analyzer.h"
 
-void init_demo_CPU_data(CPU_data *CPU, CPU_data *CPU_prev) {
+void init_demo_CPU_data(CPU_data_t*CPU, CPU_data_t*CPU_prev) {
     CPU_prev->user = 596365;
     CPU_prev->nice = 792;
     CPU_prev->system = 121328;
@@ -30,7 +30,7 @@ void init_demo_CPU_data(CPU_data *CPU, CPU_data *CPU_prev) {
     CPU->total = 0;
 }
 
-float calculate_CPU_usage_percentage(CPU_data *CPU, CPU_data *CPU_prev) {
+float calculate_CPU_usage_percentage(CPU_data_t*CPU, CPU_data_t*CPU_prev) {
 
     CPU_prev->idle = CPU_prev->idle + CPU_prev->iowait;
     CPU->idle = CPU->idle + CPU->iowait;

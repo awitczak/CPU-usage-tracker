@@ -32,20 +32,11 @@ bool log_to_file(mpsc_queue_t *queue, const char *filepath) {
     /* check if queue is not empty */
     if (get_mpsc_queue_size(queue)) {
 
-        /* create a timestamp for the log */
-        time_t now = time(NULL);
-        char *timestamp = ctime(&now);
-        timestamp[strlen(timestamp)-1] = '\0';
-
         /* get data from queue */
         char *data = (char *) mpsc_queue_pop(queue);
 
-        /* prepare the logging msg */
-        char buffer[LOG_BUFFER_SIZE];
-        sprintf(buffer, "[%s] -> %s", timestamp, data);
-
         /* write to the log file */
-        write_to_file(filepath, buffer);
+        write_to_file(filepath, data);
     }
 
     return true;
@@ -59,6 +50,15 @@ void write_to_file(const char *filepath, const char *msg) {
         exit(EXIT_FAILURE);
     }
 
-    fprintf(pFile, "%s\n", msg);
+    /* create a timestamp for the log */
+    time_t now = time(NULL);
+    char *timestamp = ctime(&now);
+    timestamp[strlen(timestamp)-1] = '\0';
+
+    fprintf(pFile, "[%s] -> %s\n", timestamp, msg);
     fclose(pFile);
+
+    if (LOG_PRINT) {
+        printf("%s\n", msg);
+    }
 }

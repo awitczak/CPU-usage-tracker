@@ -10,15 +10,8 @@
 
 void **get_CPU_data(const char* filepath) {
 
-    /* get the number of cores, to know how much lines read */
-    long num_cores = sysconf(_SC_NPROCESSORS_CONF);
-        if (num_cores == -1) {
-        perror("Error accessing CPU core number");
-        exit(EXIT_FAILURE);
-    }
-
     /* important to add 1, as the first line is the general cpu usage data */
-    size_t N_lines = (size_t) num_cores + 1;
+    size_t N_lines = (size_t) NUM_CORES + 1;
 
     FILE* pFile = fopen(filepath, "r");
 
@@ -27,7 +20,7 @@ void **get_CPU_data(const char* filepath) {
         exit(EXIT_FAILURE);
     }
     
-    char **lines = malloc(sizeof(char *) * num_cores);
+    char **lines = malloc(sizeof(char *) * N_lines);
 
     size_t line_cnt = 0;
     size_t char_cnt = 0;
@@ -61,14 +54,7 @@ void **get_CPU_data(const char* filepath) {
             char_cnt++;
         }
     }
-
-    // /* freeing will be done after the analyzer thread finishes processing the data from the queue */
-    // for (size_t i = 0; i < line_cnt; i++) {
-    //     printf("%s\n", lines[i]);
-    //     free(lines[i]);
-    // } 
-    // free(lines);
-    
+ 
     fclose(pFile);
 
     return (void **) lines;
