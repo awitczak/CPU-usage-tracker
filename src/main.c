@@ -20,8 +20,8 @@
 
 /* Time provided in milliseconds for each thread to operate */
 #define WATCHDOG_T 2000
-#define READER_T 50
-#define ANALYZER_T 50
+#define READER_T 1000
+#define ANALYZER_T 1000
 #define PRINTER_T 1000
 #define LOGGER_T 25
 
@@ -67,6 +67,7 @@ void *printer(void *arg);
 void *logger(void *arg);
 void *watchdog(void *arg);
 bool watchdog_check(pthread_mutex_t *mutex, bool *thread_responded, watchdog_args_t *wd);
+void watchdog_signal(pthread_mutex_t *mutex, bool *responded);
 void wait_ms(unsigned int ms);
 void signal_handler(int signum);
 
@@ -79,18 +80,10 @@ void *reader(void *arg) {
         wait_ms(READER_T);
 
         /* signal the watchdog */
-        pthread_mutex_lock(&reader_mutex);
-        reader_responded = true;
-        pthread_mutex_unlock(&reader_mutex);
+        watchdog_signal(&reader_mutex, &reader_responded);
 
         void **data = get_CPU_data(PROC_STAT_PATH);
-        rb_queue_push_back(th->RA_queue, data);
-
-        log_msg(th->logging_queue, "Analyzer sent");
-
-        // printf("reader -> %s\n", (char *) data[0]);
-        
-        // log_msg(th->logging_queue, "Reader ping");
+        rb_queue_push_back(th->RA_queue, data);   
     }
 
     write_to_file(LOG_FILEPATH, "Reader completed");
@@ -100,10 +93,10 @@ void *reader(void *arg) {
 void *analyzer(void *arg) {
     thread_args_t *th = (thread_args_t *) arg;
 
-    CPU_data_t CPU_curr, CPU_prev;
-    CPU_data_init(&CPU_curr, NUM_CORES);
-
-    // CPU_data_init(&CPU_prev, NUM_CORES);
+    /* initialize the structures */
+    CPU_data_t *CPU_curr = CPU_data_init(NUM_CORES);
+    CPU_data_t *CPU_prev = CPU_data_init(NUM_CORES);
+    CPU_usage_t *CPU_usage = CPU_usage_init(NUM_CORES);
 
     log_thread_info(th->logging_queue, "Analyzer started");
 
@@ -111,20 +104,26 @@ void *analyzer(void *arg) {
         wait_ms(ANALYZER_T);
 
         /* signal the watchdog */
-        pthread_mutex_lock(&analyzer_mutex);
-        analyzer_responded = true;
-        pthread_mutex_unlock(&analyzer_mutex);
+        watchdog_signal(&analyzer_mutex, &analyzer_responded);
 
+        /* get the data from queue */
         char **data = (char **) rb_queue_pop(th->RA_queue);
 
-        log_msg(th->logging_queue, "Analyzer received");
+        /* process the data and calculate % usage of cores */
+        process_CPU_data(CPU_curr, data);
+        calculate_CPU_usage_percentage(CPU_prev, CPU_curr, CPU_usage);
 
-        process_CPU_data(&CPU_curr, data);
-        print_CPU_data(&CPU_curr);
+        /* push the results to queue */
+        rb_queue_push_back(th->AP_queue, (void **) CPU_usage);
 
-        // void **data2 = get_CPU_data(PROC_STAT_PATH);
-        // rb_queue_push_back(th->AP_queue, data2);
+        /* processing done, store the data */
+        store_CPU_data(CPU_prev, CPU_curr);
     }
+
+    /* clean-up */
+    CPU_data_clear(CPU_curr);
+    CPU_data_clear(CPU_prev);
+    CPU_usage_clear(CPU_usage);
 
     write_to_file(LOG_FILEPATH, "Analyzer completed");
     return NULL;
@@ -139,15 +138,20 @@ void *printer(void *arg) {
         wait_ms(PRINTER_T);
 
         /* signal the watchdog */
-        pthread_mutex_lock(&printer_mutex);
-        printer_responded = true;
-        pthread_mutex_unlock(&printer_mutex);
+        watchdog_signal(&printer_mutex, &printer_responded);
 
-        // char **data = (char **) rb_queue_pop(th->AP_queue);
+        if (!thread_running) {
+            break;
+        }
 
-        // printf("printer -> %s\n", data[0]);
+        CPU_usage_t *CPU_usage = (CPU_usage_t *) rb_queue_pop(th->AP_queue);
+
+        if (CPU_usage != NULL) {
+            print_CPU_usage(CPU_usage);
+        }
+
+        // CPU_usage_clear(CPU_usage);
     }
-
     write_to_file(LOG_FILEPATH, "Printer completed");
     return NULL;
 }
@@ -161,9 +165,7 @@ void *logger(void *arg) {
         wait_ms(LOGGER_T);
 
         /* signal the watchdog */
-        pthread_mutex_lock(&logger_mutex);
-        logger_responded = true;
-        pthread_mutex_unlock(&logger_mutex);
+        watchdog_signal(&logger_mutex, &logger_responded);
 
         log_to_file(th->logging_queue, LOG_FILEPATH);
     }
@@ -215,16 +217,11 @@ bool watchdog_check(pthread_mutex_t *mutex, bool *thread_responded, watchdog_arg
     else {
         log_msg(wd->logging_queue, "Watchdog triggered, canceling threads");
         thread_running = false;
+
         pthread_cancel(wd->reader_id);
         pthread_cancel(wd->analyzer_id);
         pthread_cancel(wd->printer_id);
         pthread_cancel(wd->logger_id);
-
-        size_t cnt = rb_queue_count(wd->RA_queue);
-        char buffer[LOG_BUFFER_SIZE];
-        sprintf(buffer, "Queue size: %ld", cnt);
-
-        write_to_file(LOG_FILEPATH, buffer);
 
         rb_queue_destroy(wd->RA_queue, NUM_CORES);
         rb_queue_destroy(wd->AP_queue, NUM_CORES);
@@ -238,6 +235,12 @@ bool watchdog_check(pthread_mutex_t *mutex, bool *thread_responded, watchdog_arg
 
         return false;
     }
+}
+
+void watchdog_signal(pthread_mutex_t *mutex, bool *responded) {
+    pthread_mutex_lock(mutex);
+    *responded = true;
+    pthread_mutex_unlock(mutex);
 }
 
 void wait_ms(unsigned int ms) {
@@ -259,7 +262,7 @@ void signal_handler(int signum) {
     }
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     /* SIGTERM setup */
     struct sigaction action;
     action.sa_handler = signal_handler;
