@@ -1,7 +1,7 @@
 #include "rb_queue.h"
 
 void rb_queue_init(rb_queue_t *queue, size_t size) {
-    queue->data = malloc(sizeof(void **) * size);
+    queue->data = malloc(sizeof(void *) * size);
     queue->size = size;
     queue->head = 0;
     queue->tail = 0;
@@ -15,7 +15,7 @@ void rb_queue_init(rb_queue_t *queue, size_t size) {
     pthread_cond_init(&queue->not_full, NULL);
 }
 
-void rb_queue_push_back(rb_queue_t *queue, void **data) {
+void rb_queue_push_back(rb_queue_t *queue, void *data) {
     pthread_mutex_lock(&queue->lock);
 
     while ((queue->tail + 1) % queue->size == queue->head) {
@@ -29,14 +29,14 @@ void rb_queue_push_back(rb_queue_t *queue, void **data) {
     pthread_mutex_unlock(&queue->lock);
 }
 
-void **rb_queue_pop(rb_queue_t *queue) {
+void *rb_queue_pop(rb_queue_t *queue) {
     pthread_mutex_lock(&queue->lock);
 
     while (queue->head == queue->tail) {
         pthread_cond_wait(&queue->not_empty, &queue->lock);
     }
 
-    void **data = queue->data[queue->head];
+    void *data = queue->data[queue->head];
     queue->head = (queue->head + 1) % queue->size;
 
     pthread_cond_signal(&queue->not_full);
@@ -52,30 +52,20 @@ size_t rb_queue_count(rb_queue_t *queue) {
     return count;
 }
 
-void rb_queue_free(void **data, size_t size) {  
-    if (data != NULL) {
-        for (size_t i = 0; i < size; i++) {
-            if (data[i] != NULL) {
-                free(data[i]);
-                data[i] = NULL;
-            }
-        }
-        free(data);
-        data = NULL;
-    }
-}
-
 void rb_queue_destroy(rb_queue_t *queue, size_t size) {
-    size_t N = size + 1;
+    
+    // if (queue->data != NULL) {
+    //     for (size_t i = 0; i < size; i++) {
+    //         if (queue->data[i] != NULL) {
+    //             free(queue->data[i]);
+    //         }
+    //     }
+    //     free(queue->data);
+    // }
 
-    for (size_t i = 0; i < queue->size; i++) {
-        if (queue->data[i] != NULL) {
-            rb_queue_free(queue->data[i], N);
-        }
-    }
     free(queue->data);
-    queue->data = NULL;
 
+    queue->data = NULL;
     queue->size = 0;
     queue->head = 0;
     queue->tail = 0;

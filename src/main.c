@@ -96,7 +96,6 @@ void *analyzer(void *arg) {
     /* initialize the structures */
     CPU_data_t *CPU_curr = CPU_data_init(NUM_CORES);
     CPU_data_t *CPU_prev = CPU_data_init(NUM_CORES);
-    CPU_usage_t *CPU_usage = CPU_usage_init(NUM_CORES);
 
     log_thread_info(th->logging_queue, "Analyzer started");
 
@@ -111,6 +110,8 @@ void *analyzer(void *arg) {
 
         /* process the data and calculate % usage of cores */
         process_CPU_data(CPU_curr, data);
+
+        CPU_usage_t *CPU_usage = CPU_usage_init(NUM_CORES);
         calculate_CPU_usage_percentage(CPU_prev, CPU_curr, CPU_usage);
 
         /* push the results to queue */
@@ -118,12 +119,23 @@ void *analyzer(void *arg) {
 
         /* processing done, store the data */
         store_CPU_data(CPU_prev, CPU_curr);
+
+        /* free up the memory allocated in the reader thread */
+        if (data != NULL) {
+            for (size_t i = 0; i < (size_t) (NUM_CORES + 1); i++) {
+                if (data[i] != NULL) {
+                    free(data[i]);
+                }
+                data[i] = NULL;
+        }
+            free(data);
+            data = NULL;
+        }
     }
 
     /* clean-up */
     CPU_data_clear(CPU_curr);
     CPU_data_clear(CPU_prev);
-    CPU_usage_clear(CPU_usage);
 
     write_to_file(LOG_FILEPATH, "Analyzer completed");
     return NULL;
@@ -140,18 +152,13 @@ void *printer(void *arg) {
         /* signal the watchdog */
         watchdog_signal(&printer_mutex, &printer_responded);
 
-        if (!thread_running) {
-            break;
-        }
-
         CPU_usage_t *CPU_usage = (CPU_usage_t *) rb_queue_pop(th->AP_queue);
+        print_CPU_usage(CPU_usage);
 
-        if (CPU_usage != NULL) {
-            print_CPU_usage(CPU_usage);
-        }
-
-        // CPU_usage_clear(CPU_usage);
+        /* clean-up */
+        CPU_usage_clear(CPU_usage);
     }
+
     write_to_file(LOG_FILEPATH, "Printer completed");
     return NULL;
 }

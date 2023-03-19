@@ -14,7 +14,7 @@
 #include <pthread.h>
 
 typedef struct rb_queue {
-    void ***data;
+    void **data;
     size_t size;
     size_t head;
     size_t tail;
@@ -24,10 +24,9 @@ typedef struct rb_queue {
 } rb_queue_t;
 
 void rb_queue_init(rb_queue_t *queue, size_t size);
-void rb_queue_push_back(rb_queue_t *queue, void **data);
-void **rb_queue_pop(rb_queue_t *queue);
+void rb_queue_push_back(rb_queue_t *queue, void *data);
+void *rb_queue_pop(rb_queue_t *queue);
 size_t rb_queue_count(rb_queue_t *queue);
-void rb_queue_free(void **data, size_t size);
 void rb_queue_destroy(rb_queue_t *queue, size_t size);
 
 #endif /* RB_QUEUE_H */
