@@ -13,7 +13,6 @@
 #include "rb_queue.h"
 #include "mpsc_queue.h"
 
-#define NUM_THREADS 4
 #define RING_BUFFER_SIZE 128
 
 #define LOG_FILEPATH "../CPU_Usage_Tracker.log"
@@ -45,20 +44,20 @@ typedef struct {
 } watchdog_args_t;
 
 /* mutexes used for the thread responses */
-pthread_mutex_t reader_mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t analyzer_mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t printer_mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t logger_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t reader_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t analyzer_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t printer_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t logger_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* flags for thread operation */
-bool reader_responded = false;
-bool analyzer_responded = false;
-bool printer_responded = false;
-bool logger_responded = false;
+static bool reader_responded = false;
+static bool analyzer_responded = false;
+static bool printer_responded = false;
+static bool logger_responded = false;
 
-bool watchdog_triggered = false;
+static bool watchdog_triggered = false;
 
-volatile sig_atomic_t thread_running = true;
+static volatile sig_atomic_t thread_running = true;
 
 /* function declarations */
 void *reader(void *arg);
@@ -230,8 +229,8 @@ bool watchdog_check(pthread_mutex_t *mutex, bool *thread_responded, watchdog_arg
         pthread_cancel(wd->printer_id);
         pthread_cancel(wd->logger_id);
 
-        rb_queue_destroy(wd->RA_queue, NUM_CORES);
-        rb_queue_destroy(wd->AP_queue, NUM_CORES);
+        rb_queue_destroy(wd->RA_queue);
+        rb_queue_destroy(wd->AP_queue);
         mpsc_queue_destroy(wd->logging_queue);
 
         log_msg(wd->logging_queue, "Watchdog cleaned up");
@@ -269,7 +268,7 @@ void signal_handler(int signum) {
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     /* SIGTERM setup */
     struct sigaction action;
     action.sa_handler = signal_handler;
@@ -344,8 +343,8 @@ int main() {
 
     /* Destroy the queues */
     if (!watchdog_triggered) {
-        rb_queue_destroy(&RA_queue, NUM_CORES);
-        rb_queue_destroy(&AP_queue, NUM_CORES);
+        rb_queue_destroy(&RA_queue);
+        rb_queue_destroy(&AP_queue);
         mpsc_queue_destroy(&mpsc_queue);
 
         write_to_file(LOG_FILEPATH, "All queues destroyed");

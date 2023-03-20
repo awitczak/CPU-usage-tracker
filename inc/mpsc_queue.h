@@ -18,9 +18,13 @@ typedef struct mpsc_queue_node {
     struct mpsc_queue_node *next;
 } mpsc_queue_node_t;
 
+typedef struct mpsc_queue_node *ptr_mpsc_queue_node;
+typedef _Atomic(ptr_mpsc_queue_node) atomic_ptr_mpsc_queue_node_t;
+
 typedef struct {
     mpsc_queue_node_t *head;
     mpsc_queue_node_t *tail;
+    atomic_ptr_mpsc_queue_node_t atomic_tail;
     atomic_uint cnt;
 } mpsc_queue_t;
 

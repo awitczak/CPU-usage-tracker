@@ -89,14 +89,14 @@ void calculate_CPU_usage_percentage(CPU_data_t *CPU_prev, CPU_data_t *CPU_curr, 
         total_d = total - prev_total;
         idle_d = idle - prev_idle;
 
-        CPU_usage->core_usage[i] = ((total_d - idle_d) / total_d) * 100;
+        CPU_usage->core_usage[i] = (float) ((total_d - idle_d) / total_d) * 100;
     }
 }
 
 void print_CPU_usage(CPU_usage_t *CPU_usage) {
     printf("|--------------------|\n");
     for (size_t i = 0; i < CPU_usage->size; i++) {
-        printf("  cpu[%zu]: %f%%\n", i, CPU_usage->core_usage[i]);
+        printf("  cpu[%zu]: %.3f%%\n", i, CPU_usage->core_usage[i]);
     }
 }
 

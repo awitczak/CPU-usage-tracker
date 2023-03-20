@@ -27,7 +27,7 @@ void rb_queue_init(rb_queue_t *queue, size_t size);
 void rb_queue_push_back(rb_queue_t *queue, void *data);
 void *rb_queue_pop(rb_queue_t *queue);
 size_t rb_queue_count(rb_queue_t *queue);
-void rb_queue_destroy(rb_queue_t *queue, size_t size);
+void rb_queue_destroy(rb_queue_t *queue);
 
 #endif /* RB_QUEUE_H */
 

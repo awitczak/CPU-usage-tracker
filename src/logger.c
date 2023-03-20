@@ -1,6 +1,6 @@
 #include "logger.h"
 
-void log_msg(mpsc_queue_t *queue, const char *msg) {
+void log_msg(mpsc_queue_t *queue, char *msg) {
     if (LOG_MSG_ENABLE) {
         mpsc_queue_push_back(queue, (void *) msg);
     }
@@ -9,7 +9,7 @@ void log_msg(mpsc_queue_t *queue, const char *msg) {
     }
 }
 
-void log_error(mpsc_queue_t *queue, const char *err) {
+void log_error(mpsc_queue_t *queue, char *err) {
     if (LOG_ERR_ENABLE) {
         mpsc_queue_push_back(queue, (void *) err);
     }
@@ -18,7 +18,7 @@ void log_error(mpsc_queue_t *queue, const char *err) {
     }
 }
 
-void log_thread_info(mpsc_queue_t *queue, const char *thread_info) {
+void log_thread_info(mpsc_queue_t *queue, char *thread_info) {
     if (LOG_THREAD_INFO_ENABLE) {
         mpsc_queue_push_back(queue, (void *) thread_info);
     }

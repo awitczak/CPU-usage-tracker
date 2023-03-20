@@ -52,17 +52,7 @@ size_t rb_queue_count(rb_queue_t *queue) {
     return count;
 }
 
-void rb_queue_destroy(rb_queue_t *queue, size_t size) {
-    
-    // if (queue->data != NULL) {
-    //     for (size_t i = 0; i < size; i++) {
-    //         if (queue->data[i] != NULL) {
-    //             free(queue->data[i]);
-    //         }
-    //     }
-    //     free(queue->data);
-    // }
-
+void rb_queue_destroy(rb_queue_t *queue) {
     free(queue->data);
 
     queue->data = NULL;

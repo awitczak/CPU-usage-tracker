@@ -15,7 +15,7 @@
 #include <unistd.h>
 
 _Static_assert(_SC_NPROCESSORS_CONF != -1, "Failed to retrieve number of processors");
-#define NUM_CORES sysconf(_SC_NPROCESSORS_CONF)
+#define NUM_CORES (size_t) sysconf(_SC_NPROCESSORS_CONF)
 
 #define PROC_STAT_PATH "/proc/stat"
 #define CHUNK_SIZE  64

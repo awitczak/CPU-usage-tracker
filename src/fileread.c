@@ -27,7 +27,7 @@ void **get_CPU_data(const char* filepath) {
     char c;
 
     while (line_cnt < N_lines) {
-        c = fgetc(pFile);
+        c = (char) fgetc(pFile);
 
         if (ferror(pFile)) {
             perror("Problem during /proc/stat reading");
