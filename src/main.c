@@ -20,8 +20,6 @@
 /* Time provided in milliseconds for each thread to operate */
 #define WATCHDOG_T 2000
 #define READER_T 1000
-#define ANALYZER_T 1000
-#define PRINTER_T 1000
 #define LOGGER_T 25
 
 typedef struct {
@@ -77,8 +75,6 @@ void *reader(void *arg) {
 
     while (thread_running) {
         wait_ms(READER_T);
-
-        /* signal the watchdog */
         watchdog_signal(&reader_mutex, &reader_responded);
 
         void **data = get_CPU_data(PROC_STAT_PATH);
@@ -99,12 +95,8 @@ void *analyzer(void *arg) {
     log_thread_info(th->logging_queue, "Analyzer started");
 
     while (thread_running) {
-        wait_ms(ANALYZER_T);
-
-        /* signal the watchdog */
         watchdog_signal(&analyzer_mutex, &analyzer_responded);
 
-        /* get the data from queue */
         char **data = (char **) rb_queue_pop(th->RA_queue);
 
         /* process the data and calculate % usage of cores */
@@ -113,11 +105,13 @@ void *analyzer(void *arg) {
         CPU_usage_t *CPU_usage = CPU_usage_init(NUM_CORES);
         calculate_CPU_usage_percentage(CPU_prev, CPU_curr, CPU_usage);
 
+        /* processing done, store the data */
+        CPU_data_t *CPU_next = CPU_prev;
+        CPU_prev = CPU_curr;
+        CPU_curr = CPU_next;
+
         /* push the results to queue */
         rb_queue_push_back(th->AP_queue, (void **) CPU_usage);
-
-        /* processing done, store the data */
-        store_CPU_data(CPU_prev, CPU_curr);
 
         /* free up the memory allocated in the reader thread */
         if (data != NULL) {
@@ -146,9 +140,6 @@ void *printer(void *arg) {
     log_thread_info(th->logging_queue, "Printer started");
 
     while (thread_running) {
-        wait_ms(PRINTER_T);
-
-        /* signal the watchdog */
         watchdog_signal(&printer_mutex, &printer_responded);
 
         CPU_usage_t *CPU_usage = (CPU_usage_t *) rb_queue_pop(th->AP_queue);
@@ -169,8 +160,6 @@ void *logger(void *arg) {
 
     while (thread_running) {
         wait_ms(LOGGER_T);
-
-        /* signal the watchdog */
         watchdog_signal(&logger_mutex, &logger_responded);
 
         log_to_file(th->logging_queue, LOG_FILEPATH);

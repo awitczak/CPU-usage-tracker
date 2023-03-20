@@ -26,14 +26,34 @@ CPU_data_t *CPU_data_init(size_t size) {
 
 void process_CPU_data(CPU_data_t *CPU, char **data) {
     for (size_t i = 0; i < CPU->size; i++) {
-        sscanf(data[i], "%*s %u %u %u %u %u %u %u %u %u %u", &CPU->core_data[i].user, &CPU->core_data[i].nice, &CPU->core_data[i].system, &CPU->core_data[i].idle, &CPU->core_data[i].iowait, &CPU->core_data[i].irq, &CPU->core_data[i].softirq, &CPU->core_data[i].steal, &CPU->core_data[i].guest, &CPU->core_data[i].guest_nice);
+        sscanf(data[i], "%*s %u %u %u %u %u %u %u %u %u %u", 
+        &CPU->core_data[i].user, 
+        &CPU->core_data[i].nice, 
+        &CPU->core_data[i].system, 
+        &CPU->core_data[i].idle, 
+        &CPU->core_data[i].iowait, 
+        &CPU->core_data[i].irq, 
+        &CPU->core_data[i].softirq, 
+        &CPU->core_data[i].steal, 
+        &CPU->core_data[i].guest, 
+        &CPU->core_data[i].guest_nice);
     }
 }
 
 void print_CPU_data(CPU_data_t *CPU) {
     printf("|----------------------------------|\n");
     for (size_t i = 0; i < CPU->size; i++) {
-        printf("cpu[%zu]: %d %d %d %d %d %d %d %d %d %d\n", i, CPU->core_data[i].user, CPU->core_data[i].nice, CPU->core_data[i].system, CPU->core_data[i].idle, CPU->core_data[i].iowait, CPU->core_data[i].irq, CPU->core_data[i].softirq, CPU->core_data[i].steal, CPU->core_data[i].guest, CPU->core_data[i].guest_nice);
+        printf("cpu[%zu]: %d %d %d %d %d %d %d %d %d %d\n", i, 
+        CPU->core_data[i].user, 
+        CPU->core_data[i].nice, 
+        CPU->core_data[i].system, 
+        CPU->core_data[i].idle, 
+        CPU->core_data[i].iowait, 
+        CPU->core_data[i].irq, 
+        CPU->core_data[i].softirq, 
+        CPU->core_data[i].steal, 
+        CPU->core_data[i].guest, 
+        CPU->core_data[i].guest_nice);
     }
 }
 
