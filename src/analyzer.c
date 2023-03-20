@@ -114,10 +114,17 @@ void calculate_CPU_usage_percentage(CPU_data_t *CPU_prev, CPU_data_t *CPU_curr, 
 }
 
 void print_CPU_usage(CPU_usage_t *CPU_usage) {
-    printf("|--------------------|\n");
+    printf("\033[2J\033[H");
+    printf("|-- CPU core usage [%%] --|\n");
     for (size_t i = 0; i < CPU_usage->size; i++) {
-        printf("  cpu[%zu]: %.3f%%\n", i, CPU_usage->core_usage[i]);
+        if (i == 0) {
+            printf("     Average: %.3f%%\n", CPU_usage->core_usage[i]);
+        }
+        else {
+            printf("     Core[%zu]: %.3f%%\n", i, CPU_usage->core_usage[i]);
+        }
     }
+    printf("|------------------------|\n");
 }
 
 void CPU_usage_clear(CPU_usage_t *CPU_usage) {

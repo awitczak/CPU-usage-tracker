@@ -12,6 +12,9 @@
 #include <string.h>
 #include <stdint.h>
 
+#include "logger.h"
+#include "fileread.h"
+
 typedef struct {
     uint32_t user;
     uint32_t nice;
