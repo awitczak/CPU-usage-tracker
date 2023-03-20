@@ -2,8 +2,6 @@
  * 
  * @brief Functions to access and read the contents of a text file.
  *
- * @par       
- * 
  */ 
 
 #ifndef FILEREAD_H

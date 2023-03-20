@@ -1,9 +1,7 @@
 /** @file logger.h
  * 
- * @brief Queue creation.
+ * @brief Functions for file accessing and logging.
  *
- * @par       
- * 
  */ 
 
 #ifndef LOGGER_H

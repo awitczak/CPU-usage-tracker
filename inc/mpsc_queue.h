@@ -1,9 +1,7 @@
-/** @file queue.h
+/** @file mpsc_queue.h
  * 
- * @brief Queue creation.
+ * @brief Multiple producers, one consumer queue funcitons.
  *
- * @par       
- * 
  */ 
 
 #ifndef MPSC_QUEUE_H

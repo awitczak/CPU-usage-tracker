@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-// custom includes
+/* custom includes */ 
 #include "fileread.h"
 #include "analyzer.h"
 #include "logger.h"
@@ -14,7 +14,6 @@
 #include "mpsc_queue.h"
 
 #define RING_BUFFER_SIZE 128
-
 #define LOG_FILEPATH "../CPU_Usage_Tracker.log"
 
 /* Time provided in milliseconds for each thread to operate */

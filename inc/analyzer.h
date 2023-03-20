@@ -2,8 +2,6 @@
  * 
  * @brief Functions to produce the desired output from the acquired data.
  *
- * @par       
- * 
  */ 
 
 #ifndef ANALYZER_H

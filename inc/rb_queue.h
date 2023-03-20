@@ -1,8 +1,6 @@
-/** @file queue.h
+/** @file rb_queue.h
  * 
- * @brief Queue creation.
- *
- * @par       
+ * @brief Ring buffer queue functions.
  * 
  */ 
 
