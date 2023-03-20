@@ -17,7 +17,7 @@ endif()
 
 # If using Clang
 if(CMAKE_C_COMPILER_ID MATCHES "Clang")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Weverything -Wno-unused-parameter -Wno-double-promotion -Wno-disabled-macro-expansion -Wno-atomic-implicit-seq-cst -Wno-padded -Wno-declaration-after-statement")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Weverything -Wno-strict-prototypes -Wno-double-promotion -Wno-disabled-macro-expansion -Wno-atomic-implicit-seq-cst -Wno-padded -Wno-declaration-after-statement")
 endif()
 
 add_executable(CPU_usage_tracker

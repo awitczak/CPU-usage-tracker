@@ -256,7 +256,7 @@ void signal_handler(int signum) {
     }
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     /* SIGTERM setup */
     struct sigaction action;
     action.sa_handler = signal_handler;

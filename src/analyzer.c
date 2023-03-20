@@ -43,7 +43,7 @@ void process_CPU_data(CPU_data_t *CPU, char **data) {
 void print_CPU_data(CPU_data_t *CPU) {
     printf("|----------------------------------|\n");
     for (size_t i = 0; i < CPU->size; i++) {
-        printf("cpu[%zu]: %d %d %d %d %d %d %d %d %d %d\n", i, 
+        printf("cpu[%zu]: %u %u %u %u %u %u %u %u %u %u\n", i, 
         CPU->core_data[i].user, 
         CPU->core_data[i].nice, 
         CPU->core_data[i].system, 
@@ -57,6 +57,7 @@ void print_CPU_data(CPU_data_t *CPU) {
     }
 }
 
+/* not used anymore*/
 void store_CPU_data(CPU_data_t *CPU_prev, CPU_data_t *CPU_curr) {
     for (size_t i = 0; i < CPU_prev->size; i++) {
         CPU_prev->core_data[i].user       = CPU_curr->core_data[i].user;

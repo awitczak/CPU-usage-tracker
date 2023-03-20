@@ -2,8 +2,8 @@
 #include <string.h>
 #include "fileread.h"
 
-void test1_filepath();
-void test2_filepath();
+void test1_filepath(void);
+void test2_filepath(void);
 
 int main() {
 
@@ -14,7 +14,7 @@ int main() {
     return 0;
 }
 
-void test1_filepath() {
+void test1_filepath(void) {
     const char* filepath = "/home/awitczak/Desktop/CPU_Usage_Tracker/tests/test.txt";
 
     char **data = (char **) get_CPU_data(filepath);
@@ -26,7 +26,7 @@ void test1_filepath() {
     // assert(strcmp(data[0], "cpu 1123 1 1 1 1 1 1 1 1 0") == 0);
 }
 
-void test2_filepath() {
+void test2_filepath(void) {
     const char* filepath = "/home/awitczak/Desktop/CPU_Usage_Tracker/tests/test.txt";
 
     char **data = (char **) get_CPU_data(filepath);
